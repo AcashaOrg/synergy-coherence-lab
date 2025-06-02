@@ -1,0 +1,21 @@
+site_name: Synergy-Coherence-Lab Docs
+nav:
+  - Home: index.md
+theme:
+  name: material
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - md_in_html
+  - admonition
+  - codehilite
+  - toc
+  - tables
+  - footnotes
+  - sane_lists
+  - pymdownx.arithmatex
+plugins:
+  - search
+  - awesome-pages
+  - check-links
+repo_url: https://github.com/AcashaOrg/synergy-coherence-lab
