@@ -9,6 +9,14 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
 
+[project.optional-dependencies.dev]
+pytest = "*"
+nbconvert = "*"
+jupyter = "*"
+build = "*"
+twine = "*"
+mkdocs-material = "*"
+
 [project.urls]
 Homepage = "https://github.com/AcashaOrg/synergy-coherence-lab"
 
@@ -18,3 +26,6 @@ synergy-phi = "synergy_phi.cli:main"
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include = ["*.md", "notebooks/**/*"]
