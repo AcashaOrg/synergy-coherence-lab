@@ -3,6 +3,7 @@
 [![CI](https://github.com/AcashaOrg/synergy-coherence-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/AcashaOrg/synergy-coherence-lab/actions/workflows/ci.yml)
 
 Synergy Coherence Lab is a lightweight research repository exploring the concept of **synergy Φ (phi)**.  It hosts the `synergy_phi` Python package, example notebooks and documentation used for experimenting with metrics such as Integrated Information and dyadic synergy.
+For a NotebookLM Audio Overview see: https://notebooklm.google.com/notebook/7051fac9-90c1-45fe-a53d-6db17bf6d724/audio
 
 The repository includes:
 
