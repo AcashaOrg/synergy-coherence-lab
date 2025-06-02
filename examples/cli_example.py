@@ -1,8 +1,7 @@
-import sys
-from synergy_phi import hello
+"""Example of invoking the CLI programmatically."""
 
-def main():
-    print(hello())
+from synergy_phi.cli import main
+
 
 if __name__ == "__main__":
     main()
