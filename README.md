@@ -8,11 +8,20 @@ A Python library for synergy_phi.
 
 ```bash
 pip install .
+synergy-phi
 ```
 
 ```python
 from synergy_phi import hello
 print(hello())
+```
+
+## Command Line Usage
+
+After installation the ``synergy-phi`` command is available:
+
+```bash
+synergy-phi
 ```
 
 ## Repo Layout

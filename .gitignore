@@ -1,0 +1,30 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+ENV/
+.env/
+.venv/
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Test cache
+.cache/
+pytest_cache/
