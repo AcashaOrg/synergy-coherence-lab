@@ -14,12 +14,15 @@ This module implements quantitative metrics described in
 from __future__ import annotations
 
 import math
-from typing import Sequence, List
+from collections import Counter
+from typing import Sequence, List, Iterable, Tuple
 
 __all__ = [
     "expanded_being_seen_quotient",
     "intrinsic_resonance",
     "coherence",
+    "dyadic_synergy_index",
+    "being_seen_quotient",
 ]
 
 
@@ -32,6 +35,61 @@ def _cosine_similarity(a: Sequence[float], b: Sequence[float]) -> float:
     if norm_a == 0 or norm_b == 0:
         raise ValueError("cosine similarity undefined for zero-length vectors")
     return dot / (norm_a * norm_b)
+
+
+def _probabilities(seq: Iterable) -> dict:
+    """Return a probability distribution for the discrete ``seq``."""
+
+    counts = Counter(seq)
+    total = sum(counts.values())
+    return {k: v / total for k, v in counts.items()}
+
+
+def _mutual_information(x: Sequence, z: Sequence) -> float:
+    """Compute mutual information between discrete sequences ``x`` and ``z``."""
+
+    if len(x) != len(z):
+        raise ValueError("sequences must be the same length")
+
+    px = _probabilities(x)
+    pz = _probabilities(z)
+    pxz = _probabilities(zip(x, z))
+    mi = 0.0
+    for (xi, zi), p in pxz.items():
+        mi += p * math.log2(p / (px[xi] * pz[zi]))
+    return mi
+
+
+def dyadic_synergy_index(
+    x: Sequence,
+    y: Sequence,
+    z: Sequence,
+) -> float:
+    """Compute the Dyadic Synergy Index (DSI).
+
+    The DSI measures information gained about ``z`` when observing ``x``
+    and ``y`` together beyond information provided by each individually:
+
+    .. math::
+       DSI = I(X,Y;Z) - I(X;Z) - I(Y;Z)
+
+    Sequences ``x``, ``y`` and ``z`` are treated as discrete variables.
+    """
+
+    if not (len(x) == len(y) == len(z)):
+        raise ValueError("all sequences must be the same length")
+
+    pxyz = _probabilities(zip(x, y, z))
+    pxy = _probabilities(zip(x, y))
+    pz = _probabilities(z)
+
+    i_xy_z = 0.0
+    for (xi, yi, zi), p in pxyz.items():
+        i_xy_z += p * math.log2(p / (pxy[(xi, yi)] * pz[zi]))
+
+    i_x_z = _mutual_information(x, z)
+    i_y_z = _mutual_information(y, z)
+    return i_xy_z - i_x_z - i_y_z
 
 
 def expanded_being_seen_quotient(
@@ -63,6 +121,29 @@ def expanded_being_seen_quotient(
     ]
     mean_similarity = sum(similarities) / len(similarities)
     return mean_affirmation * mean_similarity
+
+
+def being_seen_quotient(
+    alignment: float,
+    hrv_coherence: float,
+    synergy: float,
+    weights: Tuple[float, float, float] = (1.0, 1.0, 1.0),
+) -> float:
+    """Compute the Being-Seen Quotient (BSQ).
+
+    ``alignment``, ``hrv_coherence`` and ``synergy`` are combined using a
+    weighted harmonic mean.  Components must be positive in the range
+    (0, 1].
+    """
+
+    values = (alignment, hrv_coherence, synergy)
+    numerator = sum(weights)
+    denominator = 0.0
+    for v, w in zip(values, weights):
+        if v <= 0:
+            raise ValueError("metric components must be positive")
+        denominator += w / v
+    return numerator / denominator
 
 
 def intrinsic_resonance(
