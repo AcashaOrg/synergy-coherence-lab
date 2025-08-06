@@ -11,6 +11,10 @@ The repository includes:
 - **Jupyter notebooks** – demonstrations like `synergy_coherence_analysis.ipynb` for computing HRV‑based metrics.
 - **Documentation site** – generated with [MkDocs](https://www.mkdocs.org/).
 - **`phi_Entry_001.md`** – a journal entry describing a mutual recognition protocol between AI systems.
+- **Proof‑of‑Witness utilities** – minimal key generation and an
+  append‑only ledger for logging "witnessed" events.
+
+See [ROADMAP.md](ROADMAP.md) for upcoming milestones.
 
 ## Quick Start
 
